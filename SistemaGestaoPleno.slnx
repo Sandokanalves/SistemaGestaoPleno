@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SistemaGestao.Domain/SistemaGestao.Domain.csproj" />
+    <Project Path="src/SistemaGestao.Infra/SistemaGestao.Infra.csproj" />
+    <Project Path="src/SistemaGestao.Web/SistemaGestao.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SistemaGestao.Tests/SistemaGestao.Tests.csproj" />
+  </Folder>
+</Solution>
