@@ -1,0 +1,73 @@
+@{
+    ViewData["Title"] = "Gestão de Produtos";
+}
+
+<div class="container mt-4">
+    <h2>Cadastro de Produtos</h2>
+    <div class="card p-3 mb-4">
+        <div class="row g-3">
+            <div class="col-md-5">
+                <input type="text" id="nome" class="form-control" placeholder="Nome do Produto">
+            </div>
+            <div class="col-md-3">
+                <input type="number" id="preco" class="form-control" placeholder="Preço">
+            </div>
+            <div class="col-md-2">
+                <input type="number" id="estoque" class="form-control" placeholder="Estoque">
+            </div>
+            <div class="col-md-2">
+                <button id="btnSalvar" class="btn btn-primary w-100">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-striped" id="tabelaProdutos">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Estoque</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+        carregarProdutos();
+
+        $('#btnSalvar').click(function () {
+        const produto = {
+        nome: $('#nome').val(),
+        preco: parseFloat($('#preco').val()),
+        estoque: parseInt($('#estoque').val())
+        };
+
+        $.ajax({
+        url: '/Produto/Criar',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(produto),
+        success: function () {
+        carregarProdutos();
+        $('#nome, #preco, #estoque').val('');
+        }
+        });
+        });
+
+        function carregarProdutos() {
+        $.get('/Produto/ObterProdutos', function (data) {
+        let html = '';
+        data.forEach(p => {
+        html += `<tr><td>${p.id}</td><td>${p.nome}</td><td>R$ ${p.preco}</td><td>${p.estoque}</td></tr>`;
+        });
+        $('#tabelaProdutos tbody').html(html);
+        });
+        }
+        });
+    </script>
+}
